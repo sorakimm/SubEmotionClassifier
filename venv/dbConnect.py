@@ -10,9 +10,9 @@ class DBConnect(object):
     def __init__(self):
         dbConnectLogger.info(("DBConnect init"))
         self._db_connection = pymysql.connect(host=config.DATABASE_CONFIG['host'],
-                               user=config.DATABASE_CONFIG['user'],
-                               password=config.DATABASE_CONFIG['password'],
-                               db=config.DATABASE_CONFIG['dbname'])
+                                              user=config.DATABASE_CONFIG['user'],
+                                              password=config.DATABASE_CONFIG['password'],
+                                              db=config.DATABASE_CONFIG['dbname'])
         self._db_connection.set_charset('utf8mb4')
         self._db_cur = self._db_connection.cursor()
 
