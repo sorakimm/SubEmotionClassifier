@@ -8,7 +8,7 @@ dbLogger = MyLogger(dbLogFile)
 dbi = dbConnect.DBConnect()
 
 class DB():
-    def makeNamuwikiTable(self):
+    def makeSubTable(self):
         makeTableQuery = """
         CREATE TABLE `sub_db`.`sub` (
             `id` INT NOT NULL AUTO_INCREMENT,
@@ -18,7 +18,7 @@ class DB():
             PRIMARY KEY (`id`));
         """
 
-        dbLogger.info("makeSubDB")
+        dbLogger.debug("makeSubDB")
         try:
             return dbi.query(makeTableQuery)
         except Exception as e:
@@ -30,14 +30,14 @@ class DB():
             VALUES (%s, %s, %s)
         """
 
-        dbLogger.info('insertSubDB')
+        dbLogger.debug('insertSubDB')
         try:
             return dbi.insert(insertDBQuery, dbTuple)
         except Exception as e:
             return dbLogger.error(e + dbTuple)
 
     def countRows(self):
-        dbLogger.info("countRows")
+        dbLogger.debug("countRows")
         try:
             return dbi.rows()
         except Exception as e:
