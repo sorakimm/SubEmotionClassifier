@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from mylogging import MyLogger
 import dbConnect
+import pymysql
 
 dbLogFile = 'log/db.log'
 dbLogger = MyLogger(dbLogFile)
@@ -10,8 +11,9 @@ dbi = dbConnect.DBConnect()
 class DB():
     def makeSubTable(self):
         makeTableQuery = """
-        CREATE TABLE `sub_db`.`sub` (
+        CREATE TABLE IF NOT EXISTS `sub_db`.`sub` (
             `id` INT NOT NULL AUTO_INCREMENT,
+            `smiFileName` VARCHAR(200) NOT NULL,
             `engSentence` VARCHAR(500) NOT NULL,
             `korSentence` VARCHAR(500) NOT NULL,
             `emotion` VARCHAR(45) NULL,
@@ -26,7 +28,7 @@ class DB():
 
     def insertSubDB(self, dbTuple):
         insertDBQuery = """
-            INSERT INTO sub (engSentence, korSentence, emotion)\
+            INSERT INTO sub (fileName, engSentence, korSentence, emotion)\
             VALUES (%s, %s, %s)
         """
 
