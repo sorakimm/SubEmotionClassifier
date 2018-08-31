@@ -60,9 +60,9 @@ class gomSubScraper():
         downPattern = re.compile("\'(.+?)\'")
         gom_boardUrl = 'http://gom.gomtv.com/main/index.html/'
         gom_DownCHPT_Url = 'ch=subtitles&pt=down&'
-        # titleUrlList = self.getTitlesOfPage(_pageNum)
+        titleUrlList = self.getTitlesOfPage(_pageNum)
         sortSmiList = []
-        titleUrlList = ['http://gom.gomtv.com/main/index.html?ch=subtitles&pt=v&menu=subtitles&seq=913992&prepage=1&md5key=&md5skey=']
+
         for titleUrl in titleUrlList:
             downHtml = getHtml(titleUrl)
             bsObj= BeautifulSoup(downHtml, 'html.parser')
@@ -76,7 +76,13 @@ class gomSubScraper():
             fullDownUrl = urljoin(gom_boardUrl, downCommand)
             smi = getHtml(fullDownUrl)
 
-            sortSmiList.append([fileName, SubEditor.sortTXT(smi)])
+            smiDict = {}
+            if SubEditor.checkKREN(smi) == True:
+                subScrapLogger.info(fileName + " sortTXT start")
+                smiDict[fileName] = SubEditor.sortTXT(smi)
+                sortSmiList.append(smiDict)
+            else:
+                subScrapLogger.info(fileName + " is wrong file")
 
         return sortSmiList
         
